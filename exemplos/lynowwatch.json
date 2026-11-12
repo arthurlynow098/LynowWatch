@@ -1,0 +1,56 @@
+{
+  // Arquivo de exemplo. Copie para %ProgramData%\LynowWatch\lynowwatch.json e ajuste os caminhos.
+  // Antes de instalar o serviço, rode "LynowWatch simular" para ver o que seria feito.
+  "Registro": "%ProgramData%\\LynowWatch\\registro.jsonl",
+  "EsperaEstabilidadeMs": 2000,
+  "VarreduraMinutos": 15,
+  "Pastas": [
+    {
+      "Nome": "Downloads",
+      "Caminho": "%USERPROFILE%\\Downloads",
+      "Subpastas": false,
+      "Regras": [
+        {
+          "Nome": "Notas fiscais",
+          "Quando": { "Extensoes": [".pdf", ".xml"], "NomeContem": ["nf", "nfe", "nota fiscal", "danfe"] },
+          "Acao": "Mover",
+          "Destino": "%USERPROFILE%\\Documents\\Notas fiscais\\{ano}\\{mes}"
+        },
+        {
+          "Nome": "Imagens",
+          "Quando": { "Extensoes": [".jpg", ".jpeg", ".png", ".heic", ".webp"] },
+          "Acao": "Mover",
+          "Destino": "%USERPROFILE%\\Pictures\\Downloads\\{ano}-{mes}"
+        },
+        {
+          "Nome": "Instaladores esquecidos",
+          "Quando": { "Extensoes": [".exe", ".msi"], "IdadeMinimaDias": 14 },
+          "Acao": "Mover",
+          "Destino": "%USERPROFILE%\\Downloads\\Instaladores antigos"
+        }
+      ]
+    },
+    {
+      "Nome": "Projetos",
+      "Caminho": "D:\\Projetos",
+      "Subpastas": true,
+      "Ignorar": ["*.bak", "*.dwl", "*.dwl2"],
+      "Regras": [
+        {
+          "Nome": "Backup de desenhos",
+          "Quando": { "Extensoes": [".dwg", ".dxf", ".step", ".stp"] },
+          "Acao": "Copiar",
+          "Destino": "E:\\Backup\\Projetos\\{relativo}",
+          "Conflito": "Substituir",
+          "ApenasSeAlterado": true
+        },
+        {
+          "Nome": "Exportações pesadas",
+          "Quando": { "Extensoes": [".ifc", ".las"], "TamanhoMinimoKb": 51200, "IdadeMinimaDias": 30 },
+          "Acao": "Compactar",
+          "Destino": "E:\\Arquivo morto\\{relativo}"
+        }
+      ]
+    }
+  ]
+}
