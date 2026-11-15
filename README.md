@@ -3,7 +3,7 @@
 ---
 
 <p align="center">
-  <img src="assets/lynowwatch-banner.png" alt="LynowWatch" width="100%">
+  <img src="assets/banner.png" alt="LynowWatch" width="100%">
 </p>
 
 <p align="center">
@@ -19,7 +19,9 @@
 > [!IMPORTANT]
 > O pacote para Windows é gerado pelo GitHub Actions e publicado em **[Releases](https://github.com/arthurlynow098/LynowWatch/releases)** a cada versão marcada. Antes de instalar o serviço, rode `LynowWatch simular`, ele mostra tudo o que seria feito sem mexer em nenhum arquivo.
 
-## Sobre o projeto
+<a id="sobre-o-projeto"></a>
+
+<p><img src="assets/secao-01.png" alt="Sobre o projeto" width="100%"></p>
 
 A pasta Downloads vira um depósito, nota fiscal misturada com foto da obra, instalador de três meses atrás, planilha que alguém mandou por e-mail. Em pastas de projeto o problema é outro, o desenho mais recente precisa de cópia no backup e as exportações pesadas ocupam o disco por anos.
 
@@ -29,7 +31,9 @@ O LynowWatch é um serviço do Windows que observa as pastas que você escolher 
   <img src="assets/lynowwatch-exemplo.png" alt="Exemplo: arquivos que chegam em Downloads, as regras aplicadas e as pastas resultantes" width="100%">
 </p>
 
-## Principais recursos
+<a id="principais-recursos"></a>
+
+<p><img src="assets/secao-02.png" alt="Principais recursos" width="100%"></p>
 
 | Recurso | Como funciona |
 |---|---|
@@ -44,7 +48,9 @@ O LynowWatch é um serviço do Windows que observa as pastas que você escolher 
 | Diário de ações | Cada ação vai para um arquivo JSON Lines com data, regra, origem, destino e resultado. |
 | Recuperação | Uma varredura periódica cobre eventos perdidos e regras por idade, mesmo depois de o PC ficar desligado. |
 
-## Tecnologias
+<a id="tecnologias"></a>
+
+<p><img src="assets/secao-03.png" alt="Tecnologias" width="100%"></p>
 
 <p>
   <img alt="C#" src="https://img.shields.io/badge/C%23_12-512BD4?style=flat-square&logo=dotnet&logoColor=white">
@@ -75,7 +81,9 @@ O LynowWatch é um serviço do Windows que observa as pastas que você escolher 
 - scripts **PowerShell** para instalar e remover o serviço com reinício automático em caso de falha
 - **GitHub Actions** roda os testes no Windows e publica o pacote em Releases.
 
-## Arquitetura
+<a id="arquitetura"></a>
+
+<p><img src="assets/secao-04.png" alt="Arquitetura" width="100%"></p>
 
 ```mermaid
 flowchart LR
@@ -95,7 +103,9 @@ flowchart LR
 
 O serviço só cuida de eventos, fila e paralelismo. Quem decide e executa é o `Motor`, do núcleo, escolhe a primeira regra que combina, calcula o destino, resolve conflitos e devolve um `Resultado`. Os comandos `simular` e `executar` usam exatamente o mesmo motor.
 
-## Configuração
+<a id="configuração"></a>
+
+<p><img src="assets/secao-05.png" alt="Configuração" width="100%"></p>
 
 O arquivo fica em `%ProgramData%\LynowWatch\lynowwatch.json`. Um exemplo completo está em [`exemplos/lynowwatch.json`](exemplos/lynowwatch.json)
 
@@ -142,7 +152,9 @@ O arquivo fica em `%ProgramData%\LynowWatch\lynowwatch.json`. Um exemplo complet
 
 As datas de `{ano}`, `{mes}` e `{dia}` vêm da última alteração do arquivo, para que uma nota de outubro vá para outubro mesmo se for organizada em novembro.
 
-## Estrutura do repositório
+<a id="estrutura-do-repositório"></a>
+
+<p><img src="assets/secao-06.png" alt="Estrutura do repositório" width="100%"></p>
 
 ```text
 LynowWatch/
@@ -157,7 +169,9 @@ LynowWatch/
 └── PRODUTO.md                    Direção do produto e próximos passos
 ```
 
-## Executando o código
+<a id="executando-o-código"></a>
+
+<p><img src="assets/secao-07.png" alt="Executando o código" width="100%"></p>
 
 Para rodar você precisa de Windows 10 ou mais recente e .NET 8 SDK.
 
@@ -183,7 +197,9 @@ dotnet run --project src/LynowWatch -- --config caminho\para\lynowwatch.json
 
 Para remover `.\remover-servico.ps1`. A configuração e o diário são mantidos.
 
-## Decisões técnicas
+<a id="decisões-técnicas"></a>
+
+<p><img src="assets/secao-08.png" alt="Decisões técnicas" width="100%"></p>
 
 - **Núcleo separado do serviço.** Toda a lógica de arquivos roda igual no serviço, na simulação e nos testes.
 - **Data do arquivo, não do relógio.** Organizar por `{ano}/{mes}` usa a última alteração, o que mantém a ordem real dos documentos.
@@ -192,13 +208,17 @@ Para remover `.\remover-servico.ps1`. A configuração e o diário são mantidos
 - **Rename como sinal de pronto.** Navegadores baixam como `.crdownload` e renomeiam no fim. O evento de rename dispara o processamento.
 - **Validação antes de iniciar.** Marcadores desconhecidos, pastas sobrepostas e destinos que criariam ciclo impedem o serviço de subir, com a mensagem do que corrigir.
 
-## Estado atual
+<a id="estado-atual"></a>
+
+<p><img src="assets/secao-09.png" alt="Estado atual" width="100%"></p>
 
 Esta é a versão **0.1.0 alpha**. As três ações, as condições, os marcadores, a simulação, o diário, a validação e a instalação como serviço estão implementados e cobertos por testes do núcleo.
 
 Ainda não há interface gráfica, a configuração é feita no JSON e o acompanhamento pelo comando `registro`. A pasta de destino de `{relativo}` replica a estrutura de origem, mas arquivos apagados na origem não são apagados no backup (não é sincronização espelhada). O executável ainda não tem assinatura de código, então o Windows pode exibir um aviso na primeira execução.
 
-## Documentação
+<a id="documentação"></a>
+
+<p><img src="assets/secao-10.png" alt="Documentação" width="100%"></p>
 
 - [Direção do produto](PRODUTO.md)
 - [Configuração de exemplo](exemplos/lynowwatch.json)
@@ -206,7 +226,9 @@ Ainda não há interface gráfica, a configuração é feita no JSON e o acompan
 - [Testes](tests/LynowWatch.Tests)
 - [Identidade visual do banner](docs/BANNER.md)
 
-## Licença
+<a id="licença"></a>
+
+<p><img src="assets/secao-11.png" alt="Licença" width="100%"></p>
 
 Distribuído sob a [licença MIT](LICENSE).
 
